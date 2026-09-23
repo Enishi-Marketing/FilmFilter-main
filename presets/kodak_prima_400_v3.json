@@ -1,0 +1,110 @@
+{
+  "name": "kodak_prima_400_v3",
+  "description": "Kodak Prima 400 emulation: warm amber shadows from the orange base, cream highlights, muted olive greens, and fine T-grain texture.",
+  "pipeline": [
+    "exposure",
+    "tone",
+    "curves",
+    "color",
+    "halation",
+    "sharpness",
+    "grain",
+    "lens",
+    "light_leak"
+  ],
+  "effects": {
+    "exposure": {
+      "enabled": true,
+      "exposure": 0.0
+    },
+    "tone": {
+      "enabled": true,
+      "black_lift": 0.0892,
+      "contrast_softness": 0.22,
+      "highlight_compression": 0.245,
+      "shoulder_strength": 0.204,
+      "shadow_chroma_damping": 0.18,
+      "rolloff_start": 0.72,
+      "midtone_preservation": 0.65
+    },
+    "curves": {
+      "enabled": true,
+      "exposure_adaptation": 0.7,
+      "shoulder_compression": 0.42
+    },
+    "color": {
+      "enabled": true,
+      "saturation": 0.822,
+      "green_mute": 0.2232,
+      "highlight_warmth": 0.065,
+      "skin_magenta_bias": 0.022,
+      "saturation_compression": 0.325,
+      "highlight_desaturation": 0.12,
+      "shadow_color_shift": 0.28,
+      "crossover_strength": 0.48,
+      "blue_sky_teal": 0.741,
+      "blue_desaturation": 0.42,
+      "gamut_compression": 0.55
+    },
+    "halation": {
+      "enabled": true,
+      "strength": 0.1564,
+      "intensity_percent": 70.0,
+      "threshold": 0.602,
+      "radius": 16.38,
+      "warmth": [
+        1.0,
+        0.42,
+        0.18
+      ]
+    },
+    "sharpness": {
+      "enabled": true,
+      "soften_digital_sharpness": true,
+      "sharpness_softening_strength": 0.18,
+      "microcontrast_reduction": 0.16
+    },
+    "grain": {
+      "enabled": true,
+      "grain_amount": 0.005,
+      "grain_size": 0.816,
+      "grain_shadow_bias": 0.692,
+      "grain_chromaticity": 0.42,
+      "micro_grain_amount": 0.0182,
+      "mid_grain_amount": 0.0111,
+      "density_variation_amount": 0.00336,
+      "clump_amount": 0.55,
+      "size_variation": 0.179,
+      "grain_softness": 0.689,
+      "texture_scale_balance": 0.448,
+      "scanner_softness": 0.337,
+      "tonal_diffusion": 0.035,
+      "edge_softening": 0.035,
+      "chroma_instability": 0.0364,
+      "density_instability": 0.01,
+      "scan_irregularity": 0.0195,
+      "seed": null
+    },
+    "lens": {
+      "enabled": true,
+      "vignette": 0.355,
+      "edge_softness": 0.18,
+      "aberration": 0.25
+    },
+    "light_leak": {
+      "enabled": false,
+      "amount": 0.18,
+      "position": "right",
+      "color": [
+        1.0,
+        0.55,
+        0.2
+      ],
+      "coverage": 0.35,
+      "softness": 0.55,
+      "irregularity": 0.3,
+      "highlight_bias": 0.55,
+      "seed": null
+    }
+  }
+}

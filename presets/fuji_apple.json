@@ -1,0 +1,86 @@
+{
+  "name": "Fuji Apple",
+  "description": "Fuji colour negative emulation: cool teal shadows, vivid punchy greens, neutral-cool skin, strong warm/cool crossover, and slightly more saturated rendering than Kodak.",
+  "pipeline": [
+    "exposure",
+    "tone",
+    "curves",
+    "color",
+    "halation",
+    "sharpness",
+    "grain",
+    "lens"
+  ],
+  "effects": {
+    "exposure": {
+      "enabled": true,
+      "exposure": 0.0
+    },
+    "tone": {
+      "enabled": true,
+      "black_lift": 0.028,
+      "contrast_softness": 0.18,
+      "highlight_compression": 0.12,
+      "shoulder_strength": 0.18,
+      "shadow_chroma_damping": 0.08,
+      "rolloff_start": 0.74,
+      "midtone_preservation": 0.60
+    },
+    "curves": {
+      "enabled": true,
+      "exposure_adaptation": 0.70,
+      "shoulder_compression": 0.45
+    },
+    "color": {
+      "enabled": true,
+      "saturation": 0.97,
+      "green_mute": 0.03,
+      "highlight_warmth": 0.028,
+      "skin_magenta_bias": 0.010,
+      "saturation_compression": 0.14,
+      "highlight_desaturation": 0.09,
+      "shadow_color_shift": -0.42,
+      "crossover_strength": 0.55,
+      "blue_sky_teal": 0.65,
+      "blue_desaturation": 0.22
+    },
+    "halation": {
+      "enabled": true,
+      "strength": 0.08,
+      "intensity_percent": 65,
+      "threshold": 0.84,
+      "radius": 9.0,
+      "warmth": [0.9, 0.55, 0.28]
+    },
+    "sharpness": {
+      "enabled": true,
+      "soften_digital_sharpness": false,
+      "sharpness_softening_strength": 0.15,
+      "microcontrast_reduction": 0.12
+    },
+    "grain": {
+      "enabled": true,
+      "grain_amount": 0.032,
+      "grain_size": 0.80,
+      "grain_shadow_bias": 0.52,
+      "grain_chromaticity": 0.35,
+      "micro_grain_amount": 0.020,
+      "mid_grain_amount": 0.008,
+      "density_variation_amount": 0.003,
+      "texture_scale_balance": 0.44,
+      "scanner_softness": 0.040,
+      "tonal_diffusion": 0.030,
+      "edge_softening": 0.030,
+      "chroma_instability": 0.030,
+      "density_instability": 0.008,
+      "scan_irregularity": 0.008,
+      "seed": null
+    },
+    "lens": {
+      "enabled": true,
+      "vignette": 0.20,
+      "edge_softness": 0.15,
+      "aberration": 0.20
+    }
+  }
+}
