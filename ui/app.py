@@ -66,13 +66,14 @@ from .presets import (
     save_preset,
     slugify,
     unique_preset_path,
+    user_preset_dir,
 )
 from .schema import SCHEMA, STAGE_ORDER, default_preset
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_INPUT_DIR = PROJECT_ROOT / "input"
-DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "output"
+DEFAULT_INPUT_DIR = Path.home() / "Pictures" if getattr(sys, "frozen", False) else PROJECT_ROOT / "input"
+DEFAULT_OUTPUT_DIR = Path.home() / "Pictures/Film Filter" if getattr(sys, "frozen", False) else PROJECT_ROOT / "output"
 PREVIEW_DEBOUNCE_MS = 90
 
 
@@ -486,6 +487,8 @@ class FilmFilterMainWindow(QMainWindow):
         if self._current_preset_path is None:
             return self._save_preset_dialog()
         preset = self._current_preset_dict()
+        if getattr(sys, "frozen", False):
+            self._current_preset_path = user_preset_dir() / self._current_preset_path.name
         try:
             save_preset(self._current_preset_path, preset)
         except OSError as exc:
@@ -757,9 +760,15 @@ class FilmFilterMainWindow(QMainWindow):
 
 def launch() -> int:
     """Launch the editor and run the Qt event loop."""
-    PRESET_DIR.mkdir(parents=True, exist_ok=True)
+    user_preset_dir().mkdir(parents=True, exist_ok=True)
     app = QApplication.instance() or QApplication(sys.argv)
     window = FilmFilterMainWindow()
+    app.setApplicationName("Film Filter")
+    from desktop.updates import start_updater
+    updater = start_updater()
+    if updater is not None:
+        action = window.menuBar().addMenu("Film Filter").addAction("Check for Updates…")
+        action.triggered.connect(lambda: updater.checkForUpdates_(None))
     window.show()
     return app.exec()
 

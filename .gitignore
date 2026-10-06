@@ -7,3 +7,8 @@ output/*
 !input/.gitkeep
 !output/.gitkeep
 /.claude/worktrees
+
+.venv-app/
+build/
+dist/
+.pyinstaller/

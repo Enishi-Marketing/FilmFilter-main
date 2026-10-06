@@ -1,0 +1,2 @@
+PyInstaller>=6.12,<7
+pyobjc-framework-Cocoa>=11,<13; sys_platform == "darwin"

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
 from typing import Any
 
@@ -17,11 +18,20 @@ from pipeline.pipeline import PRESET_DIR, load_preset
 from .schema import STAGE_BY_NAME, STAGE_ORDER, default_preset, stage_defaults
 
 
+def user_preset_dir() -> Path:
+    """Keep personal recipes outside an app bundle that updates replace."""
+    if getattr(sys, "frozen", False):
+        return Path.home() / "Library/Application Support/Film Filter/presets"
+    return PRESET_DIR
+
+
 def list_preset_files() -> list[Path]:
     """Return preset JSON paths sorted by display name."""
     if not PRESET_DIR.exists():
         return []
-    return sorted(PRESET_DIR.glob("*.json"), key=lambda p: p.stem.lower())
+    paths = {p.name: p for p in PRESET_DIR.glob("*.json")}
+    paths.update({p.name: p for p in user_preset_dir().glob("*.json")})
+    return sorted(paths.values(), key=lambda p: p.stem.lower())
 
 
 def load_preset_normalized(preset_path: Path) -> dict[str, Any]:
@@ -74,12 +84,12 @@ def slugify(name: str) -> str:
 
 def unique_preset_path(stem: str) -> Path:
     """Return a preset path that does not collide with an existing file."""
-    candidate = PRESET_DIR / f"{stem}.json"
+    candidate = user_preset_dir() / f"{stem}.json"
     if not candidate.exists():
         return candidate
     counter = 2
     while True:
-        candidate = PRESET_DIR / f"{stem}_{counter}.json"
+        candidate = user_preset_dir() / f"{stem}_{counter}.json"
         if not candidate.exists():
             return candidate
         counter += 1

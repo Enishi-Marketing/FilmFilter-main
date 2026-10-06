@@ -184,11 +184,11 @@ The `sharpness` stage is intentionally disabled by default through `soften_digit
 
 FilmFilter is an early foundation. It currently has:
 
-- no GUI
+- desktop editor available through `python gui.py` and the macOS app
 - no web app
 - no GPU path
 - no machine learning or deep learning
-- no batch processing command yet
+- batch export available in the desktop editor
 - no metadata preservation beyond basic image orientation handling
 - no physically accurate film-stock modeling
 - no automated perceptual quality tests
@@ -210,3 +210,47 @@ Possible future additions:
 ## Development Notes
 
 The codebase prioritizes readability, documentation, and modularity over feature count. New effects should remain subtle by default and should explain their aesthetic purpose in docstrings.
+
+## Standalone macOS application
+
+Film Filter includes its existing photo editor, a dedicated camera-and-film Dock
+icon, and Sparkle signed automatic updates, matching Event Control Center's
+release approach. The app bundles Python and all processing dependencies; users
+need no terminal or Python installation. Builds target macOS 14+ and the build
+Mac's architecture (this Mac produces Apple Silicon builds).
+
+Drag **Film Filter.app** from the DMG into Applications. Ad hoc signing may
+require first-open approval in macOS Privacy & Security. The app checks for
+updates at launch and periodically, downloads signed updates automatically,
+and installs when it can safely do so. **Film Filter → Check for Updates…**
+provides a manual check. Custom presets are stored in
+`~/Library/Application Support/Film Filter/presets`, and default exports go to
+`~/Pictures/Film Filter`, so app replacement preserves personal recipes and photos.
+
+### Build and prepare an update
+
+Install Python 3.12+ and obtain the official Sparkle 2.10.0 distribution containing
+`Sparkle.framework` and `bin/`. On this development Mac the Event Control Center
+build already has that distribution. Set its location:
+
+```bash
+export SPARKLE_ROOT=/Users/marketing/Documents/GitHub/event_control_center/build/swift/artifacts/sparkle/Sparkle
+python3 -m venv .venv-app
+.venv-app/bin/python -m pip install -r requirements.txt -r requirements-build.txt
+# Once per build Mac; the private key stays in login Keychain.
+"$SPARKLE_ROOT/bin/generate_keys" --account jp.ac.enishi.film-filter
+scripts/package_macos_dmg.sh
+scripts/prepare_github_release.sh
+```
+
+The installer is `dist/Film.Filter.v1.0.0.dmg` for the initial version. Increase
+`VERSION` for every subsequent release, then rebuild and prepare release assets.
+Publish all files in `build/github-release` (including the signed feed files) to
+GitHub Release `v<version>` and mark it latest. The default release repository is
+`Enishi-Marketing/FilmFilter-main`. It must be publicly readable; if the source
+is private, set `RELEASE_REPOSITORY=owner/public-release-repo` to the same value
+for both build and release preparation. Automatic updates cannot work until
+these release assets are published. Never distribute the private signing key;
+back it up securely with Sparkle's `generate_keys -x` before replacing this Mac.
+
+The original CLI and `python gui.py` remain available for development.
